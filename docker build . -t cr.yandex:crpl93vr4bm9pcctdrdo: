@@ -1,1 +1,0 @@
- docker build . -t cr.yandex/crpl93vr4bm9pcctdrdo/my-prometheus:latest -f Dockerfile
