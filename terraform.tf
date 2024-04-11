@@ -1,13 +1,14 @@
-variable "image-id" {
-  type = string
-}
-
 terraform {
   required_providers {
     yandex = {
       source = "yandex-cloud/yandex"
     }
   }
+  required_version = ">= 0.13"
+}
+
+variable "image-id" {
+  type = string
 }
 
 provider "yandex" {
@@ -17,10 +18,9 @@ provider "yandex" {
   zone      = "ru-central1-a"
 }
 
-resource "yandex_compute_instance" "default" {
+resource "yandex_compute_instance" "vm_1" {
   name        = "vm_1"
   platform_id = "standard-v1"
-  zone        = "ru-central1-a"
 
   resources {
     cores  = 2
@@ -50,14 +50,14 @@ resource "yandex_vpc_network" "network-1" {
 resource "yandex_vpc_subnet" "subnet-1" {
   name           = "from-terraform-subnet"
   zone           = "ru-central1-a"
-  network_id     = "${yandex_vpc_network.network-1.id}"
-  v4_cidr_blocks = ["10.2.0.0/16"]
+  network_id     = yandex_vpc_network.network-1.id
+  v4_cidr_blocks = ["10.1.0.0/16"]
 }
 
 output "internal_ip_address_vm_1" {
   value = yandex_compute_instance.vm_1.network_interface.0.ip_address
 }
- 
+
 output "external_ip_address_vm_1" {
   value = yandex_compute_instance.vm_1.network_interface.0.nat_ip_address
-} 
+}

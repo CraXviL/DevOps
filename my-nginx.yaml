@@ -14,4 +14,14 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: cr.yandex/crpl93vr4bm9pcctdrdo/ubuntu-nginx:latest
+        image: cr.yandex/crpj4h1bas5l0ava394p/ubuntu-nginx:latest
+
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: my-pdb
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: nginx
