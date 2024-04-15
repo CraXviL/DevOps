@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  title: for-serverless-shortener
+  version: 1.0.0
+paths:
+  /:
+    get:
+      x-yc-apigateway-integration:
+        type: object_storage
+        bucket: storage-for-serverless-shortener-craxvil
+        object: index.html
+        presigned_redirect: false
+        service_account: aje9hlms6t44h5f35to8
+      operationId: static
+  /shorten:
+    post:
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: d4e78iad6t3sh7msbh5n
+      operationId: shorten
+  /r/{id}:
+    get:
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: d4e78iad6t3sh7msbh5n
+      operationId: redirect
+      parameters:
+        - description: id of the url
+          explode: false
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          style: simple
