@@ -2,9 +2,9 @@ terraform {
   required_providers {
     yandex = {
       source = "yandex-cloud/yandex"
+      version = ">= 0.87.0"
     }
   }
-  required_version = ">= 0.13"
 }
 
 variable "image-id" {
@@ -12,7 +12,6 @@ variable "image-id" {
 }
 
 provider "yandex" {
-  token  =  "YC_TOKEN"
   cloud_id  = "YC_CLOUD_ID"
   folder_id = "YC_FOLDER_ID"
   zone      = "ru-central1-a"
